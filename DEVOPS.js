@@ -1,13 +1,13 @@
 const http = require('http');
 
-// HTML de la página
+
 const htmlContent = `
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a Programación</title>
+    <title>Welcome to Programming</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,35 +35,35 @@ const htmlContent = `
 </head>
 <body>
     <header>
-        <h1>¡Bienvenido a la Página de Programación!</h1>
+        <h1>Welcome to the Programming Page!</h1>
     </header>
     <main>
         <section>
-            <h2>Descripción 1</h2>
-            <p>Explora el mundo de la programación y aprende a crear soluciones para cualquier problema.</p>
+            <h2>Description 1</h2>
+            <p>Explore the world of programming and learn how to create solutions for any problem.</p>
         </section>
         <section>
-            <h2>Descripción 2</h2>
-            <p>Descubre herramientas y lenguajes que te llevarán al siguiente nivel en tu carrera tecnológica.</p>
+            <h2>Description 2</h2>
+            <p>Discover tools and languages that will take your tech career to the next level.</p>
         </section>
     </main>
     <footer>
-        <p>Creado solo con Node.js.</p>
+        <p>Created using Node.js only.</p>
     </footer>
 </body>
 </html>
 `;
 
-// Crear el servidor HTTP
+// Create the HTTP server
 const server = http.createServer((req, res) => {
-    // Configurar encabezados
+    // Set response headers
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    // Enviar el contenido HTML
+    // Send the HTML content
     res.end(htmlContent);
 });
 
-// Escuchar en el puerto 3000
+// Listen on port 3000
 const PORT = 3000;
 server.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
