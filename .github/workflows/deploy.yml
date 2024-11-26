@@ -1,0 +1,36 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout del código fuente
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configurar el acceso SSH
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ec2-34-201-36-184.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+
+      # Desplegar el código en la instancia EC2
+      - name: Deploy to EC2
+        run: |
+          ssh -i ~/.ssh/id_rsa ubuntu@ec2-34-201-36-184.compute-1.amazonaws.com << 'EOF'
+            cd /home/ubuntu/Aplicacion_DEVOPS
+            git pull origin main
+            npm install
+            # Usar PM2 para iniciar/reiniciar el servidor
+            pm2 start DEVOPS.js --name "AP-DEVOPS" || pm2 restart "AP-DEVOPS"
+            pm2 save
+          EOF
